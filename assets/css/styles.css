@@ -12935,3 +12935,17 @@ header.transparent {
 .modal.fade-out {
   opacity: 0;
 }
+/* Default spacing for all devices */
+.contact-info .icon-container,
+.contact-form .form-group {
+    margin-bottom: 20px;
+}
+
+/* Specific for small devices */
+@media (max-width: 768px) {
+  .contact-info .icon-container,
+
+  .contact-info {
+      margin-bottom: 30px; /* เพิ่มระยะห่างระหว่าง contact info กับ contact form */
+  }
+}
