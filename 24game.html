@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Game 24 Solver</title>
+    <!-- PyScript CSS & JS -->
+    <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
+    <script defer src="https://pyscript.net/latest/pyscript.js"></script>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 2rem;
+      }
+      input {
+        padding: 0.5rem;
+        font-size: 1rem;
+      }
+      button {
+        padding: 0.5rem;
+        font-size: 1rem;
+        margin-left: 0.5rem;
+      }
+      pre {
+        background: #f4f4f4;
+        padding: 1rem;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Game 24 Solver</h1>
+    <p>Enter 4 numbers separated by spaces:</p>
+    <input id="numbers" type="text" placeholder="e.g. 4 7 8 3" />
+    <!-- Use py-click to bind the Python function "solve" to the button click -->
+    <button id="solve-btn" py-click="solve">Solve</button>
+    <pre id="output"></pre>
+
+    <!-- The PyScript block: -->
+    <py-script>
+import operator
+from js import document
+
+# Define allowed operators with their corresponding symbols.
+ops = [
+    (operator.add, '+'),
+    (operator.sub, '-'),
+    (operator.mul, '*'),
+    (operator.truediv, '/')
+]
+
+def helper(nums):
+    """
+    Recursively combine numbers (each as a (value, expr) tuple)
+    and return a set of (value, expr) tuples for all possible expressions.
+    """
+    if len(nums) == 1:
+        return {nums[0]}
+    
+    results = set()
+    # Try every ordered pair from the list.
+    for i in range(len(nums)):
+        for j in range(len(nums)):
+            if i == j:
+                continue
+            a_val, a_expr = nums[i]
+            b_val, b_expr = nums[j]
+            # Build a new list excluding the two numbers we're combining.
+            new_nums = [nums[k] for k in range(len(nums)) if k != i and k != j]
+            for op, sym in ops:
+                # Avoid division by zero.
+                if op == operator.truediv and b_val == 0:
+                    continue
+                try:
+                    value = op(a_val, b_val)
+                except ZeroDivisionError:
+                    continue
+                # Format the new expression with parentheses.
+                expr = f"({a_expr} {sym} {b_expr})"
+                new_entry = (value, expr)
+                results |= helper(new_nums + [new_entry])
+    return results
+
+def find_game_24_solution(numbers):
+    """
+    Given a list of four numbers, find all expressions that evaluate to 24.
+    Each number is used exactly once.
+    """
+    # Start with each number as a tuple (value, expression)
+    initial = [(num, str(num)) for num in numbers]
+    all_expressions = helper(initial)
+    solutions = set()
+    for value, expr in all_expressions:
+        # Using a tolerance for floating point arithmetic.
+        if abs(value - 24) < 1e-6:
+            solutions.add(expr)
+    return solutions
+
+def solve(event):
+    """Function called when the Solve button is clicked."""
+    input_text = document.getElementById("numbers").value
+    parts = input_text.strip().split()
+    if len(parts) != 4:
+        document.getElementById("output").innerText = "Please enter exactly 4 numbers."
+        return
+    try:
+        numbers = [float(num) for num in parts]
+    except ValueError:
+        document.getElementById("output").innerText = "Invalid input. Please enter valid numbers."
+        return
+
+    solutions = find_game_24_solution(numbers)
+    if solutions:
+        result = "Solutions to Game 24 for {}:\n".format(numbers)
+        for sol in solutions:
+            result += sol + "\n"
+    else:
+        result = "No solution found for {}.".format(numbers)
+    document.getElementById("output").innerText = result
+    print(result)
+    </py-script>
+  </body>
+</html>
