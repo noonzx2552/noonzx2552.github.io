@@ -99,6 +99,7 @@ function findSolution(numbers) {
             for (let op2 of operations) {
                 for (let op3 of operations) {
                     const expression = `(${perm[0]} ${op1} ${perm[1]}) ${op2} (${perm[2]} ${op3} ${perm[3]})`;
+                    printToTerminal(`Trying: ${expression}`, true); // Debug log
                     if (evaluateExpression(expression) === 24) {
                         return expression + " = 24";
                     }
