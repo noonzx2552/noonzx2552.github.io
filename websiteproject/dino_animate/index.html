@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      margin: 0;
+      height: 100vh; /* ให้ความสูงของ body ครอบคลุมหน้าจอทั้งหมด */
+      display: flex; /* ใช้ Flexbox เพื่อจัดตำแหน่ง */
+      justify-content: center; /* จัดแนวนอนให้ข้อความอยู่กลาง */
+      align-items: center; /* จัดแนวตั้งให้ข้อความอยู่กลาง */
+      position: relative; /* ทำให้สามารถใช้ z-index ได้ */
+      overflow: hidden;
+    }
+
+    h1 {
+      font-size: 3em; /* ขนาดตัวอักษร */
+      color: #3498db; /* เปลี่ยนสีข้อความ */
+      font-family: 'Arial', sans-serif; /* เปลี่ยนฟอนต์ */
+      z-index: 2; /* ให้อยู่ด้านหน้ารูป */
+    }
+
+    .dinosaur {
+      position: absolute;
+      width: 50px;
+      height: 50px;
+      background: url('../../assets/imgs/image.png') no-repeat center/contain;
+      z-index: 1; /* ไดโนเสาร์อยู่ด้านหลังข้อความ */
+    }
+  </style>
+</head>
+<body>
+  <h1>Hello World!</h1>
+  <div class="dinosaur"></div>
+
+  <script>
+    const dinosaur = document.querySelector('.dinosaur');
+    let xPos = Math.random() * (window.innerWidth - 50); // Initial random x position
+    let yPos = Math.random() * (window.innerHeight - 50); // Initial random y position
+    let angle = Math.random() * 2 * Math.PI; // Random initial angle (in radians)
+    let speed = 3; // Speed of the dinosaur
+
+    function animate() {
+      // Calculate the change in x and y using cos and sin for smooth diagonal movement
+      let xChange = Math.cos(angle) * speed;
+      let yChange = Math.sin(angle) * speed;
+
+      // Update positions
+      xPos += xChange;
+      yPos += yChange;
+
+      // Check for collisions with the screen edges
+      if (xPos <= 0 || xPos >= window.innerWidth - 50) {
+        angle = Math.PI - angle; // Reverse direction on horizontal collision (left/right)
+      }
+
+      if (yPos <= 0 || yPos >= window.innerHeight - 50) {
+        angle = -angle; // Reverse direction on vertical collision (top/bottom)
+      }
+
+      // Apply the new position
+      dinosaur.style.left = `${xPos}px`;
+      dinosaur.style.top = `${yPos}px`;
+
+      // Request the next frame for smooth animation
+      requestAnimationFrame(animate);
+    }
+
+    // Start the animation
+    animate();
+  </script>
+</body>
+</html>

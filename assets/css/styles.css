@@ -12317,7 +12317,15 @@ pre .code {
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
+
+  /* ขยายเต็มที่ */
+  width: 100%;
+  max-width: 1000px; /* กำหนดขีดจำกัดความกว้าง */
+  margin: 0 auto;    /* จัดให้อยู่กลาง */
+  box-sizing: border-box; /* รวม padding ใน width */
 }
+
+
 
 .icon-container {
   display: flex;
@@ -12572,6 +12580,7 @@ body.modal-open {
 .portfolio-card-img {
   width: 100%;
   transition: transform 0.3s ease, box-shadow 0.3s ease; /* เพิ่ม transition สำหรับเงา */
+  /* margin-top: 20px; */
 }
 
 .portfolio-card-img:hover {
@@ -12936,16 +12945,6 @@ header.transparent {
   opacity: 0;
 }
 /* Default spacing for all devices */
-.contact-info .icon-container,
-.contact-form .form-group {
-    margin-bottom: 20px;
-}
-
-/* Specific for small devices */
-@media (max-width: 768px) {
-  .contact-info .icon-container,
-
-  .contact-info {
-      margin-bottom: 30px; /* เพิ่มระยะห่างระหว่าง contact info กับ contact form */
-  }
+.img-cert{
+  margin-top: 20px;
 }

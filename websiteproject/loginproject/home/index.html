@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ShopPlus — หน้าหลัก</title>
+  <meta name="description" content="โฮมเพจตัวอย่างสำหรับเว็บซื้อขายสินค้า แบบไฟล์เดียว" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0b0c10;
+      --card: #121417;
+      --muted: #9aa3af;
+      --text: #e5e7eb;
+      --brand: #6ee7b7; /* teal-200 */
+      --brand-strong: #34d399; /* emerald-400 */
+      --accent: #60a5fa; /* blue-400 */
+      --danger: #f87171; /* red-400 */
+      --ring: #ffffff24;
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --radius: 16px;
+      --radius-lg: 22px;
+      --gap: 16px;
+    }
+
+    /* Light theme (optional) */
+    [data-theme="light"] {
+      --bg: #f6f7fb;
+      --card: #ffffff;
+      --muted: #667085;
+      --text: #0f172a;
+      --brand: #0ea5e9;
+      --brand-strong: #0284c7;
+      --accent: #7c3aed;
+      --danger: #dc2626;
+      --ring: #0ea5e933;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      font-family: "Noto Sans Thai", system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+      background: radial-gradient(1200px 800px at 70% -10%, #1b1f26 0%, var(--bg) 60%) fixed;
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    /* Utilities */
+    .container { max-width: 1200px; padding: 0 20px; margin: 0 auto; }
+    .btn { display: inline-flex; align-items: center; gap: 10px; border: 1px solid transparent; background: var(--brand); color: #0d1b1e; padding: 12px 18px; border-radius: 999px; font-weight: 700; text-decoration: none; box-shadow: var(--shadow); transition: .2s ease; }
+    .btn:hover { transform: translateY(-2px); background: var(--brand-strong); }
+    .btn.outline { background: transparent; color: var(--text); border-color: var(--ring); box-shadow: none; }
+    .btn.outline:hover { background: #ffffff10; }
+    .badge { display: inline-block; padding: 6px 10px; border-radius: 999px; background: #22d3ee22; border: 1px solid #22d3ee55; color: #a5f3fc; font-weight: 700; font-size: 12px; }
+    .pill { display: inline-flex; align-items: center; gap: 8px; padding: 8px 12px; border: 1px dashed var(--ring); border-radius: 999px; color: var(--muted); font-size: 13px; }
+    .grid { display: grid; gap: var(--gap); }
+
+    /* Header */
+    header {
+      position: sticky; top: 0; z-index: 50;
+      backdrop-filter: saturate(1.4) blur(10px);
+      background: linear-gradient(180deg, #0b0c10cc 0%, #0b0c1000 100%);
+      border-bottom: 1px solid #ffffff10;
+    }
+    .nav-wrap { display: flex; align-items: center; justify-content: space-between; padding: 14px 0; }
+    .logo { display: inline-flex; align-items: center; gap: 10px; font-weight: 900; letter-spacing: .5px; }
+    .logo .mark { width: 34px; height: 34px; border-radius: 10px; background: linear-gradient(135deg, var(--brand) 0%, var(--accent) 100%); display: grid; place-items: center; color: #001018; font-weight: 900; box-shadow: var(--shadow); }
+    nav a { color: var(--muted); text-decoration: none; margin: 0 10px; font-weight: 600; border-bottom: 2px solid transparent; padding-bottom: 6px; }
+    nav a:hover { color: var(--text); border-color: var(--ring); }
+    .actions { display: flex; align-items: center; gap: 10px; }
+    .icon-btn { position: relative; display: inline-grid; place-items: center; width: 42px; height: 42px; border-radius: 12px; border: 1px solid var(--ring); background: #ffffff06; cursor: pointer; }
+    .icon-btn:hover { background: #ffffff10; }
+    .count { position: absolute; top: -6px; right: -6px; background: var(--danger); color: #fff; border-radius: 999px; padding: 2px 7px; font-size: 12px; font-weight: 800; box-shadow: var(--shadow); }
+    .search { display: none; align-items: center; gap: 8px; border: 1px solid var(--ring); background: #ffffff06; padding: 10px 14px; border-radius: 12px; min-width: 260px; }
+    .search input { flex: 1; background: transparent; border: none; outline: none; color: var(--text); font-size: 14px; }
+
+    /* Hero */
+    .hero { padding: 40px 0 24px; }
+    .hero-card {
+      display: grid; grid-template-columns: 1.3fr 1fr; gap: 20px; align-items: center;
+      background: linear-gradient(135deg, #111318, #0c1014);
+      border: 1px solid #ffffff12; border-radius: var(--radius-lg); padding: 28px; box-shadow: var(--shadow);
+      overflow: hidden; position: relative;
+    }
+    .hero h1 { margin: 0 0 10px; font-size: clamp(28px, 4vw, 44px); line-height: 1.1; }
+    .hero p { margin: 0 0 18px; color: var(--muted); font-size: 15px; }
+    .hero .cta { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+    .hero-graphic { min-height: 220px; border-radius: var(--radius); background: radial-gradient(300px 220px at 70% 30%, #1e293b 0%, #0b0c10 70%); border: 1px solid #ffffff10; position: relative; overflow: hidden; }
+
+    /* Floating product cards (decorative) */
+    .float-card { position: absolute; background: #161a20; border: 1px solid #ffffff14; border-radius: 14px; padding: 10px 12px; box-shadow: var(--shadow); display: flex; gap: 10px; align-items: center; }
+    .float-card .img { width: 44px; height: 44px; border-radius: 10px; background: linear-gradient(135deg, #22d3ee44, #818cf844); display: grid; place-items: center; font-weight: 900; }
+    .float-card small { color: var(--muted); }
+    .fc1 { top: 24px; left: 24px; }
+    .fc2 { bottom: 24px; right: 24px; }
+
+    /* Benefits */
+    .benefits { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--gap); margin: 20px 0 10px; }
+    .benefit { background: #0e1216; border: 1px solid #ffffff12; border-radius: var(--radius); padding: 14px 16px; display: flex; gap: 12px; align-items: center; }
+    .benefit .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--brand); box-shadow: 0 0 0 4px #34d39922; }
+
+    /* Categories */
+    .section { padding: 26px 0; }
+    .section h2 { margin: 0 0 10px; font-size: 22px; }
+    .section p.lead { margin: 0 0 16px; color: var(--muted); font-size: 14px; }
+
+    .cat-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: var(--gap); }
+    .cat-card { position: relative; border-radius: var(--radius); overflow: hidden; border: 1px solid #ffffff12; background: linear-gradient(135deg, #0b1220, #0c1418); height: 120px; display: grid; place-items: center; text-align: center; padding: 10px; transition: transform .2s ease; }
+    .cat-card:hover { transform: translateY(-3px); }
+    .cat-card strong { display: block; }
+    .cat-card span { color: var(--muted); font-size: 12px; }
+
+    /* Products */
+    .product-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--gap); }
+    .card { background: var(--card); border: 1px solid #ffffff12; border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); display: flex; flex-direction: column; }
+    .thumb { height: 180px; background: linear-gradient(135deg, #111827, #0e1725); display: grid; place-items: center; }
+    .thumb svg { opacity: .6; }
+    .card .content { padding: 14px; display: grid; gap: 8px; }
+    .price { display: flex; align-items: baseline; gap: 8px; }
+    .price strong { font-size: 18px; }
+    .price del { color: var(--muted); font-size: 13px; }
+    .rating { color: #fde68a; font-size: 14px; }
+    .card .actions { margin-top: auto; padding: 12px 14px 16px; display: flex; gap: 10px; }
+    .qty { display: inline-flex; border: 1px solid var(--ring); border-radius: 999px; overflow: hidden; }
+    .qty button { background: transparent; border: none; color: var(--text); width: 32px; height: 32px; cursor: pointer; }
+    .qty input { width: 40px; text-align: center; border: none; background: transparent; color: var(--text); }
+
+    /* Newsletter */
+    .newsletter { display: grid; grid-template-columns: 1.2fr 1fr; gap: 20px; align-items: center; background: linear-gradient(135deg, #0e1117, #10151b); border: 1px solid #ffffff12; border-radius: var(--radius-lg); padding: 20px; }
+    .nl-input { display: flex; gap: 10px; }
+    .nl-input input { flex: 1; border-radius: 12px; border: 1px solid var(--ring); padding: 12px 14px; background: #ffffff06; color: var(--text); outline: none; }
+
+    /* Footer */
+    footer { margin-top: 26px; padding: 26px 0; border-top: 1px solid #ffffff12; color: var(--muted); }
+    .footgrid { display: grid; grid-template-columns: 1.4fr repeat(3, 1fr); gap: 20px; }
+    .footgrid a { color: var(--muted); text-decoration: none; }
+    .footgrid a:hover { color: var(--text); }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .hero-card { grid-template-columns: 1fr; }
+      .newsletter { grid-template-columns: 1fr; }
+      .benefits { grid-template-columns: repeat(2, 1fr); }
+      .cat-grid { grid-template-columns: repeat(3, 1fr); }
+      .product-grid { grid-template-columns: repeat(2, 1fr); }
+      .search { display: none; }
+    }
+    @media (min-width: 1025px) { .search { display: inline-flex; } }
+    @media (max-width: 640px) {
+      nav { display: none; }
+      .cat-grid { grid-template-columns: repeat(2, 1fr); }
+      .product-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <div class="container nav-wrap">
+      <a href="#" class="logo" aria-label="ShopPlus Home">
+        <span class="mark">S+</span>
+        <span>ShopPlus</span>
+      </a>
+      <nav aria-label="หลัก">
+        <a href="#">หน้าหลัก</a>
+        <a href="#products">สินค้า</a>
+        <a href="#categories">หมวดหมู่</a>
+        <a href="#deals">โปรโมชัน</a>
+        <a href="#contact">ติดต่อ</a>
+      </nav>
+      <div class="actions">
+        <div class="search" role="search">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 21l-4.35-4.35" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          <input id="search" type="search" placeholder="ค้นหาสินค้า…" aria-label="ค้นหาสินค้า" />
+        </div>
+        <button id="themeToggle" class="icon-btn" aria-label="สลับธีม">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3a9 9 0 100 18 9 9 0 000-18z" stroke="currentColor" stroke-width="1.4"/></svg>
+        </button>
+        <button class="icon-btn" aria-label="บัญชีผู้ใช้">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 12a5 5 0 100-10 5 5 0 000 10zM3 21a9 9 0 0118 0" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+        </button>
+        <button id="cartBtn" class="icon-btn" aria-label="ตะกร้าสินค้า">
+          <span id="cartCount" class="count">0</span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 3h2l2 13h10l2-9H6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero -->
+    <section class="hero container">
+      <div class="hero-card">
+        <div>
+          <span class="badge">เปิดตัวคอลเลกชันใหม่</span>
+          <h1>โปรแรง ✨ ลดสูงสุด 50% ช้อปสนุกทุกหมวด!</h1>
+          <p>อัปเกรดไลฟ์สไตล์ด้วยสินค้าคุณภาพ ราคาดี ส่งไว มีประกัน คืนง่ายใน 7 วัน</p>
+          <div class="cta">
+            <a class="btn" href="#products">เริ่มช้อปเลย</a>
+            <a class="btn outline" href="#deals">ดูโปรโมชัน</a>
+            <span class="pill">ชำระเงินปลอดภัย · เก็บปลายทางได้</span>
+          </div>
+        </div>
+        <div class="hero-graphic">
+          <div class="float-card fc1">
+            <div class="img">🖥️</div>
+            <div>
+              <strong>จอมอนิเตอร์ 27"</strong><br>
+              <small>เริ่มเพียง 4,990.-</small>
+            </div>
+          </div>
+          <div class="float-card fc2">
+            <div class="img">🎧</div>
+            <div>
+              <strong>หูฟังไร้สาย</strong><br>
+              <small>ยอดนิยม 5★</small>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Benefits -->
+      <div class="benefits">
+        <div class="benefit"><span class="dot"></span> ส่งฟรีเมื่อสั่งครบ 699.-</div>
+        <div class="benefit"><span class="dot"></span> ชำระเงินปลอดภัย</div>
+        <div class="benefit"><span class="dot"></span> บริการ 24/7</div>
+        <div class="benefit"><span class="dot"></span> คืนง่ายภายใน 7 วัน</div>
+      </div>
+    </section>
+
+    <!-- Categories -->
+    <section id="categories" class="section container">
+      <h2>หมวดหมู่ยอดฮิต</h2>
+      <p class="lead">เลือกดูตามหมวดที่คุณสนใจ</p>
+      <div class="cat-grid">
+        <a class="cat-card" href="#">
+          <div>
+            <strong>อิเล็กทรอนิกส์</strong>
+            <span>มือถือ · อุปกรณ์คอม</span>
+          </div>
+        </a>
+        <a class="cat-card" href="#">
+          <div>
+            <strong>เกมมิ่ง</strong>
+            <span>เมาส์ · คีย์บอร์ด · เก้าอี้</span>
+          </div>
+        </a>
+        <a class="cat-card" href="#">
+          <div>
+            <strong>แฟชัน</strong>
+            <span>เสื้อผ้า · รองเท้า</span>
+          </div>
+        </a>
+        <a class="cat-card" href="#">
+          <div>
+            <strong>บ้าน & ครัว</strong>
+            <span>เครื่องใช้ · ตกแต่ง</span>
+          </div>
+        </a>
+        <a class="cat-card" href="#">
+          <div>
+            <strong>กีฬา</strong>
+            <span>ฟิตเนส · เอาต์ดอร์</span>
+          </div>
+        </a>
+        <a class="cat-card" href="#">
+          <div>
+            <strong>ไลฟ์สไตล์</strong>
+            <span>แกดเจ็ต · ของแต่ง</span>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <!-- Products -->
+    <section id="products" class="section container">
+      <h2>สินค้าแนะนำวันนี้</h2>
+      <p class="lead">คลิกเพิ่มลงตะกร้าได้เลย</p>
+
+      <div class="product-grid" id="productGrid">
+        <!-- สินค้าจะถูกเติมด้วย JS ด้านล่าง -->
+      </div>
+    </section>
+
+    <!-- Newsletter / CTA -->
+    <section class="section container">
+      <div class="newsletter">
+        <div>
+          <h3 style="margin:0 0 8px">รับโค้ดส่วนลด 100.- สำหรับออเดอร์แรก!</h3>
+          <p style="margin:0;color:var(--muted)">สมัครรับข่าวสาร โปรโมชั่น และสินค้าใหม่ ๆ ก่อนใคร</p>
+        </div>
+        <form class="nl-input" onsubmit="event.preventDefault(); alert('สมัครสำเร็จ! 🎉'); this.reset();">
+          <input type="email" placeholder="กรอกอีเมลของคุณ" required aria-label="อีเมล" />
+          <button class="btn" type="submit">สมัครเลย</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer id="contact">
+    <div class="container footgrid">
+      <div>
+        <div class="logo" style="margin-bottom:10px"><span class="mark">S+</span><span>ShopPlus</span></div>
+        <p>แพลตฟอร์มช้อปปิ้งที่ใช้ง่าย ปลอดภัย และคุ้มค่า ดูแลคุณตั้งแต่สั่งซื้อจนถึงหลังการขาย</p>
+      </div>
+      <div>
+        <strong>หมวดหมู่</strong>
+        <div class="grid" style="margin-top:10px">
+          <a href="#">อิเล็กทรอนิกส์</a>
+          <a href="#">เกมมิ่ง</a>
+          <a href="#">แฟชัน</a>
+          <a href="#">บ้าน & ครัว</a>
+        </div>
+      </div>
+      <div>
+        <strong>ช่วยเหลือ</strong>
+        <div class="grid" style="margin-top:10px">
+          <a href="#">วิธีสั่งซื้อ</a>
+          <a href="#">การชำระเงิน</a>
+          <a href="#">การจัดส่ง</a>
+          <a href="#">คืนสินค้า</a>
+        </div>
+      </div>
+      <div>
+        <strong>ติดตามเรา</strong>
+        <div class="grid" style="margin-top:10px">
+          <a href="#">Facebook</a>
+          <a href="#">Instagram</a>
+          <a href="#">X (Twitter)</a>
+          <a href="#">YouTube</a>
+        </div>
+      </div>
+    </div>
+    <div class="container" style="margin-top:16px; color:var(--muted); font-size:13px">© <span id="year"></span> ShopPlus. สงวนลิขสิทธิ์</div>
+  </footer>
+
+  <script>
+    // ---------- Theme toggle ----------
+    const themeBtn = document.getElementById('themeToggle');
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme) document.documentElement.setAttribute('data-theme', savedTheme);
+    themeBtn?.addEventListener('click', () => {
+      const cur = document.documentElement.getAttribute('data-theme');
+      const next = cur === 'light' ? null : 'light';
+      if (next) document.documentElement.setAttribute('data-theme', next); else document.documentElement.removeAttribute('data-theme');
+      localStorage.setItem('theme', next || 'dark');
+    });
+
+    // ---------- Mock products ----------
+    const products = [
+      { id: 1, name: 'หูฟังไร้สาย ANC', price: 1990, compare: 2490, rating: 4.8 },
+      { id: 2, name: 'คีย์บอร์ด Mechanical', price: 2590, compare: 2990, rating: 4.7 },
+      { id: 3, name: 'สมาร์ตวอตช์ กันน้ำ', price: 1290, compare: 1890, rating: 4.6 },
+      { id: 4, name: 'ลำโพงบลูทูธ เบสแน่น', price: 1490, compare: 1890, rating: 4.5 },
+      { id: 5, name: 'ที่ชาร์จไว 30W', price: 490, compare: 690, rating: 4.4 },
+      { id: 6, name: 'เมาส์เกมมิ่ง 6 ปุ่ม', price: 690, compare: 990, rating: 4.6 },
+      { id: 7, name: 'กระติกน้ำสแตนเลส', price: 390, compare: 590, rating: 4.3 },
+      { id: 8, name: 'โคมไฟโต๊ะทำงาน', price: 590, compare: 890, rating: 4.5 }
+    ];
+
+    const grid = document.getElementById('productGrid');
+    const cartCountEl = document.getElementById('cartCount');
+    let cartCount = 0;
+
+    function createProductCard(p) {
+      const el = document.createElement('article');
+      el.className = 'card';
+      el.innerHTML = `
+        <div class="thumb" aria-hidden="true">
+          ${placeholderSVG()}
+        </div>
+        <div class="content">
+          <div style="display:flex;justify-content:space-between;gap:8px;align-items:start">
+            <div>
+              <strong>${p.name}</strong>
+              <div class="rating">${'★'.repeat(Math.round(p.rating))}<span style="opacity:.5">${'☆'.repeat(5-Math.round(p.rating))}</span> · ${p.rating.toFixed(1)}</div>
+            </div>
+            <span class="badge">ขายดี</span>
+          </div>
+          <div class="price"><strong>฿${p.price.toLocaleString()}</strong><del>฿${p.compare.toLocaleString()}</del></div>
+        </div>
+        <div class="actions">
+          <div class="qty" role="group" aria-label="จำนวน">
+            <button aria-label="ลดจำนวน">−</button>
+            <input type="number" inputmode="numeric" value="1" min="1" aria-label="จำนวนสินค้า" />
+            <button aria-label="เพิ่มจำนวน">+</button>
+          </div>
+          <button class="btn add" aria-label="เพิ่มลงตะกร้า">เพิ่มลงตะกร้า</button>
+        </div>
+      `;
+
+      const input = el.querySelector('input');
+      const [minus, plus] = el.querySelectorAll('.qty button');
+      minus.addEventListener('click', () => input.stepDown());
+      plus.addEventListener('click', () => input.stepUp());
+      el.querySelector('.add').addEventListener('click', () => {
+        const qty = Math.max(1, parseInt(input.value || '1', 10));
+        cartCount += qty;
+        cartCountEl.textContent = String(cartCount);
+        el.querySelector('.add').textContent = 'เพิ่มแล้ว ✓';
+        setTimeout(() => el.querySelector('.add').textContent = 'เพิ่มลงตะกร้า', 1000);
+      });
+
+      return el;
+    }
+
+    function placeholderSVG() {
+      return `
+        <svg width="80" height="80" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ภาพตัวอย่างสินค้า">
+          <defs>
+            <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#22d3ee" stop-opacity="0.35"/>
+              <stop offset="100%" stop-color="#818cf8" stop-opacity="0.35"/>
+            </linearGradient>
+          </defs>
+          <rect x="0" y="0" width="80" height="80" rx="12" fill="url(#g)" />
+          <path d="M16 54l12-16 10 12 10-12 16 16" fill="none" stroke="#ffffff" opacity=".7" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>`;
+    }
+
+    products.forEach(p => grid.appendChild(createProductCard(p)));
+
+    // Footer year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Tiny search demo
+    const search = document.getElementById('search');
+    search?.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        alert(`ผลการค้นหา: "${search.value}"`);
+      }
+    });
+  </script>
+</body>
+</html>
