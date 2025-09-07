@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Auspicious Shirt Color Picker</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Kanit&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="container" role="main" aria-label="Auspicious Shirt Color Picker">
+    <header class="header">
+      <h1 id="app-title">Auspicious Shirt Color Picker</h1>
+      <div class="toggles">
+        <button id="theme-toggle" aria-label="Toggle theme" title="Toggle theme">🌤️</button>
+        <button id="lang-toggle" aria-label="Toggle language" title="Toggle language">EN</button>
+      </div>
+    </header>
+
+    <section class="card" aria-label="Date selection">
+      <h2 id="date-section-title">Select Date</h2>
+      <label class="checkbox-label">
+        <input type="checkbox" id="use-today" checked />
+        <span id="use-today-label">Use Today (default)</span>
+      </label>
+      <div class="date-picker-wrapper">
+        <button id="date-picker-button" aria-haspopup="dialog" aria-expanded="false" aria-controls="calendar-popup" disabled>
+          <span id="selected-date-display"></span>
+          <span aria-hidden="true" class="calendar-icon">📅</span>
+        </button>
+        <div id="calendar-popup" class="calendar-popup" role="dialog" aria-modal="true" aria-label="Calendar" hidden>
+          <header class="calendar-header">
+            <button id="prev-month" aria-label="Previous month">◀</button>
+            <div id="calendar-month-year" aria-live="polite" aria-atomic="true"></div>
+            <button id="next-month" aria-label="Next month">▶</button>
+          </header>
+          <table class="calendar-table" role="grid" aria-labelledby="calendar-month-year">
+            <thead>
+              <tr id="calendar-weekdays"></tr>
+            </thead>
+            <tbody id="calendar-days" role="rowgroup"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section class="card" aria-label="Aspect selection">
+      <h2 id="aspect-section-title">Select Aspect</h2>
+      <div id="aspect-buttons" class="aspect-buttons" role="list"></div>
+    </section>
+
+    <section class="card" aria-label="Results">
+      <h2 id="results-title">Results</h2>
+      <div class="results-pills" aria-live="polite" aria-atomic="true">
+        <span id="pill-weekday" class="pill"></span>
+        <span id="pill-aspect" class="pill"></span>
+      </div>
+      <div class="colors-section">
+        <div class="colors-group">
+          <h3 id="recommended-title">Recommended Colors</h3>
+          <div id="recommended-colors" class="color-swatches" role="list"></div>
+        </div>
+        <div class="colors-group">
+          <h3 id="avoid-title">Avoid</h3>
+          <div id="avoid-colors" class="color-swatches" role="list"></div>
+        </div>
+      </div>
+      <div class="results-buttons">
+        <button id="copy-summary" aria-label="Copy summary">Copy</button>
+        <button id="reset-button" aria-label="Reset to defaults">Reset</button>
+      </div>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
