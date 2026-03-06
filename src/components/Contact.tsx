@@ -10,7 +10,7 @@ const Contact = () => {
           <div className="contact-box">
             <h4>Email</h4>
             <p>
-              <a href="mailto:example@mail.com" data-cursor="disable">
+              <a href="mailto:thammasorn.chen@gmail.com" data-cursor="disable">
                 thammasorn.chen@gmail.com
               </a>
             </p>
@@ -24,44 +24,44 @@ const Contact = () => {
           <div className="contact-box">
             <h4>Social</h4>
             <a
-              href="https://github.com"
+              href="https://www.facebook.com/thammasorn.chen"
               target="_blank"
               data-cursor="disable"
               className="contact-social"
             >
-              Github <MdArrowOutward />
+              Facebook <MdArrowOutward />
             </a>
             <a
-              href="https://www.linkedin.com"
-              target="_blank"
-              data-cursor="disable"
-              className="contact-social"
-            >
-              Linkedin <MdArrowOutward />
-            </a>
-            <a
-              href="https://x.com"
-              target="_blank"
-              data-cursor="disable"
-              className="contact-social"
-            >
-              Twitter <MdArrowOutward />
-            </a>
-            <a
-              href="https://www.instagram.com"
+              href="https://www.instagram.com/dontknowuser_alpha"
               target="_blank"
               data-cursor="disable"
               className="contact-social"
             >
               Instagram <MdArrowOutward />
             </a>
+            <a
+              href="https://discord.com/channels/@me/698520080979591258"
+              target="_blank"
+              data-cursor="disable"
+              className="contact-social"
+            >
+              Discord <MdArrowOutward />
+            </a>
+            <a
+              href="https://github.com/noonzx2552"
+              target="_blank"
+              data-cursor="disable"
+              className="contact-social"
+            >
+              Github <MdArrowOutward />
+            </a>
           </div>
           <div className="contact-box">
             <h2>
-              Designed and Developed <br /> by <span>Moncy Yohannan</span>
+              Designed and Developed <br /> by <span>Non Thammasorn</span>
             </h2>
             <h5>
-              <MdCopyright /> 2024
+              <MdCopyright /> 2026
             </h5>
           </div>
         </div>

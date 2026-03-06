@@ -6,6 +6,49 @@ import { useEffect } from "react";
 
 gsap.registerPlugin(ScrollTrigger);
 
+const projects = [
+  {
+    id: "01",
+    name: "Sprint to Survive",
+    category: "Game For Education",
+    tools: "C#, Unity",
+    image: "/images/placeholder.webp",
+    link: "https://github.com/",
+  },
+  {
+    id: "02",
+    name: "PyVenturer",
+    category: "Game For Education",
+    tools: "C#, Python, HTML/CSS, JS, Chatgpt-api, Unity",
+    image: "/images/placeholder.webp",
+    link: "https://github.com/",
+  },
+  {
+    id: "03",
+    name: "Sentinel AI",
+    category: "Real-Time Scam Detection App",
+    tools: "Unity, C#, Blender",
+    image: "/images/placeholder.webp",
+    link: "https://github.com/",
+  },
+  {
+    id: "04",
+    name: "Folio Website",
+    category: "Graphic Design",
+    tools: "HTML, CSS, JavaScript, SCSS, jQuery, Bootstrap",
+    image: "/images/placeholder.webp",
+    link: "https://github.com/",
+  },
+  {
+    id: "05",
+    name: "Phising Detection",
+    category: "Full-Stack",
+    tools: "TyprScript, HTML, CSS, JavaScript",
+    image: "/images/placeholder.webp",
+    link: "https://github.com/",
+  },
+];
+
 const Work = () => {
   useEffect(() => {
     let translateX = 0;
@@ -54,24 +97,28 @@ const Work = () => {
     <div className="work-section" id="work">
       <div className="work-container section-container">
         <h2>
-          My <span>Work</span>
+          My <span>Project</span>
         </h2>
         <div className="work-flex">
-          {[...Array(6)].map((_value, index) => (
-            <div className="work-box" key={index}>
+          {projects.map((project) => (
+            <div className="work-box" key={project.id}>
               <div className="work-info">
                 <div className="work-title">
-                  <h3>0{index + 1}</h3>
+                  <h3>{project.id}</h3>
 
                   <div>
-                    <h4>Project Name</h4>
-                    <p>Category</p>
+                    <h4>{project.name}</h4>
+                    <p>{project.category}</p>
                   </div>
                 </div>
                 <h4>Tools and features</h4>
-                <p>Javascript, TypeScript, React, Threejs</p>
+                <p>{project.tools}</p>
               </div>
-              <WorkImage image="/images/placeholder.webp" alt="" />
+              <WorkImage
+                image={project.image}
+                alt={project.name}
+                link={project.link}
+              />
             </div>
           ))}
         </div>
