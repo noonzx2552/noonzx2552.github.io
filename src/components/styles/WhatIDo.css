@@ -149,11 +149,14 @@
   width: 25px;
   height: 25px;
   border: 1px solid #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .what-arrow::before {
   content: "";
   position: absolute;
-  top: 40%;
+  top: 45%;
   left: 50%;
   transform: translate(-50%, -50%) rotate(-45deg);
   border-left: 1px solid #fff;
@@ -164,7 +167,7 @@
 }
 .what-noTouch:hover .what-arrow::before,
 .what-content-active .what-arrow::before {
-  transform: translate(-50%, -20%) rotate(-225deg);
+  transform: translate(-50%, -50%) rotate(135deg);
 }
 .what-border1 {
   position: absolute;

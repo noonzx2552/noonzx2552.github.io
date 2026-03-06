@@ -46,7 +46,7 @@ const Loading = ({ percent }: { percent: number }) => {
     <>
       <div className="loading-header">
         <a href="/#" className="loader-title" data-cursor="disable">
-          Logo
+          U$3R
         </a>
         <div className={`loaderGame ${clicked && "loader-out"}`}>
           <div className="loaderGame-container">
@@ -62,8 +62,8 @@ const Loading = ({ percent }: { percent: number }) => {
       <div className="loading-screen">
         <div className="loading-marquee">
           <Marquee>
-            <span> A Creative Developer</span> <span>A Creative Designer</span>
-            <span> A Creative Developer</span> <span>A Creative Designer</span>
+            <span> A Full-Stack Development</span> <span>A Cyber Security</span>
+            <span> A Full-Stack Development</span> <span>A Cyber Security</span>
           </Marquee>
         </div>
         <div
