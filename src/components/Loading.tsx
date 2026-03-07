@@ -19,7 +19,7 @@ const Loading = ({ percent }: { percent: number }) => {
       revealTimer = setTimeout(() => {
         setIsLoaded(true);
       }, 1000);
-    }, 1500);
+    }, 500);
 
     return () => {
       clearTimeout(loadedTimer);
