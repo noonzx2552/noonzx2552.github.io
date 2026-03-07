@@ -10,14 +10,22 @@ const Loading = ({ percent }: { percent: number }) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [clicked, setClicked] = useState(false);
 
-  if (percent >= 100) {
-    setTimeout(() => {
+  useEffect(() => {
+    if (percent < 100) return;
+
+    let revealTimer: ReturnType<typeof setTimeout> | undefined;
+    const loadedTimer = setTimeout(() => {
       setLoaded(true);
-      setTimeout(() => {
+      revealTimer = setTimeout(() => {
         setIsLoaded(true);
       }, 1000);
-    }, 600);
-  }
+    }, 1500);
+
+    return () => {
+      clearTimeout(loadedTimer);
+      if (revealTimer) clearTimeout(revealTimer);
+    };
+  }, [percent]);
 
   useEffect(() => {
     import("./utils/initialFX").then((module) => {
