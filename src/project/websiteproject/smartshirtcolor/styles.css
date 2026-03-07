@@ -1,0 +1,480 @@
+/* Reset & base */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-family: 'Kanit', sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  background-color: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  padding: 1rem;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.container {
+  max-width: 900px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* Theme variables */
+:root {
+  --font-family: 'Kanit', sans-serif;
+
+  /* Light theme */
+  --light-bg: #fefefe;
+  --light-card-bg: #ffffff;
+  --light-text: #222222;
+  --light-muted: #666666;
+  --light-border: #ddd;
+  --light-shadow: rgba(0, 0, 0, 0.05);
+  --light-primary: #7da7d9;
+  --light-primary-hover: #5a8acb;
+
+  /* Dark theme */
+  --dark-bg: #1e1e2f;
+  --dark-card-bg: #2a2a3d;
+  --dark-text: #dcdce6;
+  --dark-muted: #9999aa;
+  --dark-border: #444466;
+  --dark-shadow: rgba(0, 0, 0, 0.7);
+  --dark-primary: #7a9cc6;
+  --dark-primary-hover: #5a7db0;
+}
+
+/* Theme switching */
+html[data-theme='light'] {
+  --bg: var(--light-bg);
+  --card-bg: var(--light-card-bg);
+  --text: var(--light-text);
+  --muted: var(--light-muted);
+  --border: var(--light-border);
+  --shadow: var(--light-shadow);
+  --primary: var(--light-primary);
+  --primary-hover: var(--light-primary-hover);
+}
+
+html[data-theme='dark'] {
+  --bg: var(--dark-bg);
+  --card-bg: var(--dark-card-bg);
+  --text: var(--dark-text);
+  --muted: var(--dark-muted);
+  --border: var(--dark-border);
+  --shadow: var(--dark-shadow);
+  --primary: var(--dark-primary);
+  --primary-hover: var(--dark-primary-hover);
+}
+
+/* Header */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.header h1 {
+  margin: 0;
+  font-weight: 700;
+  font-size: 1.75rem;
+  color: var(--primary);
+}
+
+/* Toggles */
+.toggles {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.toggles button {
+  background: var(--card-bg);
+  border: 1.5px solid var(--border);
+  border-radius: 0.5rem;
+  padding: 0.4rem 0.8rem;
+  font-size: 1.25rem;
+  cursor: pointer;
+  color: var(--text);
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+  user-select: none;
+}
+
+.toggles button:hover,
+.toggles button:focus-visible {
+  background-color: var(--primary);
+  border-color: var(--primary-hover);
+  color: #fff;
+  outline-offset: 2px;
+  outline: 2px solid var(--primary-hover);
+}
+
+/* Cards */
+.card {
+  background: var(--card-bg);
+  border-radius: 1rem;
+  box-shadow: 0 4px 12px var(--shadow);
+  padding: 1rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.card h2 {
+  margin: 0;
+  font-weight: 600;
+  color: var(--primary);
+  font-size: 1.25rem;
+}
+
+/* Checkbox label */
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 500;
+  user-select: none;
+  cursor: pointer;
+  color: var(--text);
+}
+
+.checkbox-label input[type='checkbox'] {
+  width: 1.2rem;
+  height: 1.2rem;
+  cursor: pointer;
+}
+
+/* Date picker wrapper */
+.date-picker-wrapper {
+  position: relative;
+  width: max-content;
+}
+
+/* Date picker button */
+#date-picker-button {
+  background: var(--card-bg);
+  border: 1.5px solid var(--border);
+  border-radius: 0.5rem;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  cursor: pointer;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 180px;
+  user-select: none;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+#date-picker-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+#date-picker-button:hover:not(:disabled),
+#date-picker-button:focus-visible:not(:disabled) {
+  background-color: var(--primary);
+  border-color: var(--primary-hover);
+  color: #fff;
+  outline-offset: 2px;
+  outline: 2px solid var(--primary-hover);
+}
+
+.calendar-icon {
+  font-size: 1.2rem;
+}
+
+/* Calendar popup */
+.calendar-popup {
+  position: absolute;
+  top: 110%;
+  left: 0;
+  background: var(--card-bg);
+  border: 1.5px solid var(--border);
+  border-radius: 0.75rem;
+  box-shadow: 0 8px 20px var(--shadow);
+  width: 280px;
+  z-index: 1000;
+  user-select: none;
+  display: flex;
+  flex-direction: column;
+  padding: 0.5rem;
+  animation: fadeIn 0.25s ease forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Calendar header */
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.25rem;
+  font-weight: 600;
+  color: var(--primary);
+  user-select: none;
+}
+
+.calendar-header button {
+  background: transparent;
+  border: none;
+  font-size: 1.25rem;
+  cursor: pointer;
+  color: var(--primary);
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.5rem;
+  transition: background-color 0.2s ease;
+}
+
+.calendar-header button:hover,
+.calendar-header button:focus-visible {
+  background-color: var(--primary-hover);
+  color: #fff;
+  outline-offset: 2px;
+  outline: 2px solid var(--primary-hover);
+}
+
+/* Calendar table */
+.calendar-table {
+  width: 100%;
+  border-collapse: collapse;
+  user-select: none;
+}
+
+.calendar-table thead tr {
+  border-bottom: 1.5px solid var(--border);
+}
+
+.calendar-table th,
+.calendar-table td {
+  width: 14.2857%;
+  text-align: center;
+  padding: 0.3rem 0;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--muted);
+  user-select: none;
+}
+
+.calendar-table td {
+  cursor: pointer;
+  border-radius: 0.5rem;
+  color: var(--text);
+  font-weight: 500;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  position: relative;
+}
+
+.calendar-table td.muted {
+  color: var(--muted);
+  font-weight: 400;
+  cursor: default;
+}
+
+.calendar-table td.today::after {
+  content: '';
+  position: absolute;
+  bottom: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 6px;
+  height: 6px;
+  background-color: var(--primary);
+  border-radius: 50%;
+}
+
+.calendar-table td.selected {
+  background-color: var(--primary);
+  color: #fff;
+  font-weight: 700;
+}
+
+.calendar-table td:hover:not(.muted):not(.selected),
+.calendar-table td:focus-visible:not(.muted):not(.selected) {
+  background-color: var(--primary-hover);
+  color: #fff;
+  outline-offset: 2px;
+  outline: 2px solid var(--primary-hover);
+}
+
+/* Aspect buttons */
+.aspect-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.aspect-buttons button {
+  background: var(--card-bg);
+  border: 1.5px solid var(--border);
+  border-radius: 1.5rem;
+  padding: 0.4rem 1rem;
+  font-size: 1rem;
+  cursor: pointer;
+  color: var(--text);
+  font-weight: 600;
+  user-select: none;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.aspect-buttons button.selected {
+  background-color: var(--primary);
+  border-color: var(--primary-hover);
+  color: #fff;
+}
+
+.aspect-buttons button:hover:not(.selected),
+.aspect-buttons button:focus-visible:not(.selected) {
+  background-color: var(--primary-hover);
+  border-color: var(--primary-hover);
+  color: #fff;
+  outline-offset: 2px;
+  outline: 2px solid var(--primary-hover);
+}
+
+/* Results pills */
+.results-pills {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+
+.pill {
+  background-color: var(--primary);
+  color: #fff;
+  padding: 0.4rem 1rem;
+  border-radius: 1.5rem;
+  font-weight: 600;
+  user-select: none;
+  white-space: nowrap;
+}
+
+/* Colors section */
+.colors-section {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.colors-group {
+  flex: 1 1 45%;
+  min-width: 200px;
+}
+
+.colors-group h3 {
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+  color: var(--primary);
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+/* Color swatches */
+.color-swatches {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.color-swatch {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 72px;
+  cursor: default;
+  user-select: none;
+}
+
+.color-box {
+  width: 48px;
+  height: 32px;
+  border-radius: 0.5rem;
+  border: 1.5px solid var(--border);
+  box-shadow: 0 1px 3px var(--shadow);
+  margin-bottom: 0.25rem;
+}
+
+.color-name {
+  font-size: 0.8rem;
+  text-align: center;
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Results buttons */
+.results-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+}
+
+.results-buttons button {
+  background: var(--card-bg);
+  border: 1.5px solid var(--border);
+  border-radius: 0.5rem;
+  padding: 0.5rem 1.25rem;
+  font-size: 1rem;
+  cursor: pointer;
+  color: var(--text);
+  font-weight: 600;
+  user-select: none;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.results-buttons button:hover,
+.results-buttons button:focus-visible {
+  background-color: var(--primary);
+  border-color: var(--primary-hover);
+  color: #fff;
+  outline-offset: 2px;
+  outline: 2px solid var(--primary-hover);
+}
+
+/* Responsive layout */
+@media (min-width: 640px) {
+  .colors-section {
+    flex-wrap: nowrap;
+  }
+}
+
+@media (min-width: 860px) {
+  .container {
+    gap: 2rem;
+  }
+}
+
+/* Focus outline for accessibility */
+:focus-visible {
+  outline-offset: 2px;
+  outline: 2px solid var(--primary-hover);
+}

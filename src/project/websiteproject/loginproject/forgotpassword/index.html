@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+            font-family: 'Roboto', sans-serif;
+        }
+        .login-container {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 300px;
+        }
+        .login-container h1 {
+            margin-bottom: 1.5rem;
+        }
+        .login-container input[type="email"],
+        .login-container input[type="text"],
+        .login-container input[type="password"] {
+            width: 100%;
+            padding: 0.75rem;
+            margin: 0.5rem 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        .login-container button {
+            background-color: #6C8FFF;
+            border: none;
+            border-radius: 4px;
+            color: white;
+            padding: 0.75rem;
+            width: 100%;
+            margin-top: 1rem;
+            cursor: pointer;
+            font-size: 1rem;
+            text-transform: uppercase;
+        }
+        .login-container button:hover {
+            background-color: #5A7DE7;
+        }
+        .login-container .link {
+            margin-top: 1rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .login-container .link a {
+            display: block;
+            color: #6C8FFF;
+            text-decoration: none;
+            margin-top: 0.5rem;
+        }
+        .login-container .link a:hover {
+            text-decoration: underline;
+        }
+
+        .popup {
+            display: none;
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+        }
+        .popup-overlay {
+            display: none;
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
+        .popup button.close {
+            background: #88D66C; /* สีพื้นหลังปุ่ม */
+            border: none;
+            color: #000000; /* เปลี่ยนข้อความเป็นสีดำ */
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 1rem;
+            font-size: 1rem;
+            text-transform: uppercase;
+        }
+        .popup button.close:hover {
+            background: #B4E380; /* สีพื้นหลังเมื่อ hover */
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h1>Resetpassword</h1>
+        <form onsubmit="return validateRegister()">
+            <input type="email" id="email" placeholder="Email" required>
+            <input type="text" id="username" placeholder="Username" required>
+            <button type="submit">Register</button>
+        </form>
+        <div class="link">
+            <a href="../login/">Login</a>
+        </div>
+    </div>
+
+    <div class="popup-overlay" id="popup-overlay"></div>
+    <div class="popup" id="popup">
+        <p id="popup-message"></p>
+        <input type="text" id="otp" placeholder="Enter OTP" maxlength="6" oninput="validateOTPInput()" inputmode="numeric" pattern="[0-9]*" required>
+        <button class="close" onclick="verifyOTP()">NEXT</button>
+    </div>
+
+    <script>
+        let otpTimeout;
+        const correctOTP = "123456"; // ตัวอย่าง OTP ที่ถูกต้อง
+
+        function validateRegister() {
+            const email = document.getElementById('email').value;
+            const username = document.getElementById('username').value;
+            const popup = document.getElementById('popup');
+            const popupMessage = document.getElementById('popup-message');
+            const popupOverlay = document.getElementById('popup-overlay');
+
+            // แสดงข้อความเพื่อให้ผู้ใช้กรอก OTP
+            popupMessage.innerHTML = "A verification code has been sent to your email.<br>Please enter the code.";
+            popupOverlay.style.display = 'block';
+            popup.style.display = 'block';
+
+            return false; // ป้องกันการส่งฟอร์มจริงๆ
+        }
+
+        function validateOTPInput() {
+            const otpInput = document.getElementById('otp');
+            otpInput.value = otpInput.value.replace(/[^0-9]/g, ''); // ลบอักขระที่ไม่ใช่ตัวเลข
+        }
+
+        function verifyOTP() {
+            const enteredOTP = document.getElementById('otp').value;
+            if (enteredOTP === '000000') {
+                alert("Registration successful!");
+                document.getElementById('otp').value = '';
+                // นำไปสู่หน้าสำเร็จ
+                window.location.href = "resetpassword.html";
+            } else {
+                alert("Invalid OTP. Please try again.");
+                // ล้างค่าในช่องกรอก OTP
+                document.getElementById('otp').value = '';
+            }
+        }
+
+        function closePopup() {
+            document.getElementById('popup').style.display = 'none';
+            document.getElementById('popup-overlay').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
